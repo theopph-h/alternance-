@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Alternance — moteur intelligent de recherche, suivi et pilotage des candidatures.">
+  <title>Alternance — Trouve ton alternance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">A</span><span>Alternance<span class="dot">.</span></span></a>
+      <nav>
+        <button class="nav-item active" data-view="dashboard">⌂ <span>Tableau de bord</span></button>
+        <button class="nav-item" data-view="offers">⌕ <span>Offres</span><span class="nav-count" id="offerCount">12</span></button>
+        <button class="nav-item" data-view="applications">✓ <span>Candidatures</span></button>
+        <button class="nav-item" data-view="favorites">★ <span>Favoris</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="nav-item" data-view="profile">◉ <span>Mon profil</span></button>
+        <button class="nav-item" id="exportBtn">↥ <span>Exporter mes données</span></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">ESPACE CANDIDAT</p>
+          <h1 id="pageTitle">Ton alternance, pilotée intelligemment.</h1>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" id="themeBtn" title="Changer le thème">☾</button>
+          <button class="profile-pill" data-view="profile"><span class="avatar">TH</span><span>Théophile</span><span>⌄</span></button>
+        </div>
+      </header>
+
+      <section id="dashboard" class="view active-view">
+        <div class="hero">
+          <div>
+            <span class="badge">Recherche active</span>
+            <h2>Construis ta prochaine étape.</h2>
+            <p>Centralise les offres, repère les opportunités pertinentes et suis chaque candidature au même endroit.</p>
+            <button class="primary" data-view="offers">Explorer les offres →</button>
+          </div>
+          <div class="hero-orb"><span>⚡</span><small>matching</small></div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat"><span>Offres trouvées</span><strong id="statOffers">12</strong><small>dans ta recherche</small></article>
+          <article class="stat"><span>Candidatures</span><strong id="statApps">0</strong><small>suivies</small></article>
+          <article class="stat"><span>Favoris</span><strong id="statFavs">0</strong><small>à relancer</small></article>
+          <article class="stat"><span>Score profil</span><strong>86%</strong><small>profil complété</small></article>
+        </div>
+
+        <div class="section-head"><div><p class="eyebrow">RECOMMANDATIONS</p><h3>Opportunités pour toi</h3></div><button class="text-btn" data-view="offers">Voir tout →</button></div>
+        <div class="offer-grid" id="dashboardOffers"></div>
+      </section>
+
+      <section id="offers" class="view">
+        <div class="section-head"><div><p class="eyebrow">MOTEUR DE RECHERCHE</p><h2>Trouver une alternance</h2></div></div>
+        <div class="search-panel">
+          <div class="search-row">
+            <label>Poste, métier, entreprise<input id="searchInput" placeholder="Ex. business developer, commercial, IKEA..."></label>
+            <label>Ville<input id="locationInput" value="Lille"></label>
+            <button class="primary search-btn" id="searchBtn">Rechercher</button>
+          </div>
+          <div class="filters">
+            <select id="contractFilter"><option value="">Tous les contrats</option><option>Apprentissage</option><option>Professionnalisation</option></select>
+            <select id="levelFilter"><option value="">Tous les niveaux</option><option>Bac+2</option><option>Bac+3</option><option>Bac+4</option></select>
+            <select id="remoteFilter"><option value="">Présentiel / hybride</option><option>Hybride</option><option>Présentiel</option></select>
+            <label class="check"><input type="checkbox" id="newOnly"> Nouvelles offres</label>
+          </div>
+        </div>
+        <div class="results-meta"><span id="resultsLabel">12 offres</span><span>Tri : <select id="sortSelect"><option value="match">Pertinence</option><option value="recent">Plus récentes</option><option value="salary">Rémunération</option></select></span></div>
+        <div class="offer-list" id="offerList"></div>
+      </section>
+
+      <section id="applications" class="view">
+        <div class="section-head"><div><p class="eyebrow">PIPELINE</p><h2>Mes candidatures</h2></div><button class="primary" id="addAppBtn">+ Ajouter</button></div>
+        <div class="pipeline" id="pipeline"></div>
+      </section>
+
+      <section id="favorites" class="view">
+        <div class="section-head"><div><p class="eyebrow">À SAISIR</p><h2>Mes favoris</h2></div></div>
+        <div class="offer-list" id="favoriteList"></div>
+      </section>
+
+      <section id="profile" class="view">
+        <div class="section-head"><div><p class="eyebrow">PERSONNALISATION</p><h2>Mon profil</h2></div></div>
+        <div class="profile-card">
+          <div class="profile-avatar">TH</div>
+          <div class="profile-fields">
+            <label>Prénom<input id="profileName" value="Théophile"></label>
+            <label>Formation<input id="profileSchool" value="Bachelor Responsable du Développement Commercial — ICL Lille"></label>
+            <label>Ville cible<input id="profileCity" value="Lille"></label>
+            <label>Métiers recherchés<input id="profileJobs" value="Business Developer, Commercial, Responsable de secteur"></label>
+            <label>Rythme<input id="profileRhythm" value="1 semaine cours / 2 semaines entreprise"></label>
+            <button class="primary" id="saveProfile">Enregistrer mon profil</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
